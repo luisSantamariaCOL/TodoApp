@@ -6,27 +6,29 @@
             Let's edit your todo!
         </div>
         <div class="card-body">
-            <form action="">
+            <form method="POST">
                 <div class="form-group">
                     <label for="">Title</label>
-                    <input type="text" class="form-control" name="title" required>
+                    <input type="text" class="form-control" name="title" value="{{todo.title}}" required>
                 </div>
                 <div class="form-group">
                     <label for="">Description</label>
-                    <textarea name="description" class="form-control" rows="3" required></textarea>
+                    <textarea name="description" class="form-control" rows="3" required>{{todo.description}}</textarea>
                 </div>
                 <div class="form-group">
                     <label>Priority</label>
-                    <select name="Priority" class="form-control">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
+                    <select name="priority" class="form-control">
+                        {% for i in range(1, 6) %}
+                            {% if todo.priority == i %}
+                            <option {% if todo.priority == i %} selected="selected" {% endif %}>{{i}}</option>
+                            {% else %}
+                            <option>{{i}}</option>
+                            {% endif %}
+                        {% endfor %}
                     </select>
                 </div>
                 <button type="submit" class="btn btn-primary">Edit your todo</button>
-                <button type="button" class="btn btn-danger">Delete</button>
+                <a href="{{ url_for('delete_todo', todo_id=todo.id) }}" class="btn btn-danger">Delete</a>
             </form>
         </div>
     </div>

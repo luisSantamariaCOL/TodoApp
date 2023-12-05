@@ -20,14 +20,25 @@
 
                 <tbody>
                     {% for todo in todos %}
+                    {% if todo.complete == False %}
                     <tr class="pointer">
                         <td>{{ loop.index }}</td>
                         <td>{{ todo.title }}</td>
                         <td>
-                            <button type="button" class="btn btn-success">Complete</button>
+                            <a href="{{ url_for('complete_todo', todo_id=todo.id) }}" class="btn btn-success">Complete</a>
                             <a href="{{ url_for('edit_todo', todo_id=todo.id) }}" class="btn btn-info">Edit</a>
                         </td>
                     </tr>
+                    {% else %}
+                    <tr class="pointer alert alert-success">
+                        <td>{{ loop.index }}</td>
+                        <td class="strike-through-td">{{ todo.title }}</td>
+                        <td>
+                            <a href="{{ url_for('complete_todo', todo_id=todo.id) }}" class="btn btn-success">Undo</a>
+                            <a href="{{ url_for('edit_todo', todo_id=todo.id) }}" class="btn btn-info">Edit</a>
+                        </td>
+                    </tr>
+                    {% endif %}
                     {% endfor %}
                 </tbody>
             </table>
