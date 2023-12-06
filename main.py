@@ -4,14 +4,15 @@ from database import engine
 from routers import auth, todos
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
+from starlette import status
 from starlette.staticfiles import StaticFiles
 
 app = FastAPI()
 
 # Redirect root path to "/docs"
 @app.get("/", include_in_schema=False)
-async def redirect_to_docs():
-    return RedirectResponse(url="/docs", status_code=302)
+async def root():
+    return RedirectResponse(url="/todos", status_code=status.HTTP_302_FOUND)
 
 models.Base.metadata.create_all(bind=engine)
 
